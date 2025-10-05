@@ -11,7 +11,7 @@
 - [Especificações do Ambiente RL](#-especificações-do-ambiente-rl)
 - [Função de Recompensa](#-função-de-recompensa)
 - [Overlay de Risco](#-overlay-de-risco-por-drawdown)
-- [Otimização MPT](#-otimização-mpt-markowitz)
+- [Otimização MPT](#-otimização-mpt-markowitz)  
 - [Features e Sinais](#-features-e-sinais)
 - [Avaliação e Métricas](#-avaliação-e-métricas)
 - [Estrutura do Projeto](#-estrutura-do-projeto)
