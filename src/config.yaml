@@ -1,0 +1,132 @@
+# Configuração do Synapse Portfolio (Advanced)
+seed: 42
+
+universe:
+  tickers: [
+    # === CRYPTOS (11) ===
+    "BTC-USD", "ETH-USD", "BNB-USD", "XRP-USD", "ADA-USD", "SOL-USD",
+    "DOGE-USD", "MATIC-USD", "DOT-USD", "AVAX-USD", "LINK-USD",
+    
+    # === US EQUITIES - Indices (10) ===
+    "SPY", "QQQ", "DIA", "IWM", "VTI", "VOO", "RSP", "MDY", "VB", "VUG",
+    
+    # === SECTORIALS (11) ===
+    "XLF", "XLE", "XLK", "XLV", "XLP", "XLY", "XLI", "XLU", "XLB", "XLRE", "XLC",
+    
+    # === TECH & INNOVATION (8) ===
+    "ARKK", "ARKW", "HACK", "BOTZ", "FINX", "CLOU", "SOXX", "SMH",
+    
+    # === THEMATICS (7) ===
+    "ICLN", "TAN", "LIT", "DRIV", "ESPO", "JETS", "UFO",
+    
+    # === INTERNATIONAL - Developed (8) ===
+    "EFA", "VEA", "EWJ", "EWG", "EWU", "EWC", "EWA", "EWL",
+    
+    # === EMERGING MARKETS (10) ===
+    "EEM", "VWO", "EWZ", "MCHI", "INDA", "EWW", "EZA", "RSX", "EIDO", "THD",
+    
+    # === BONDS - Treasury (5) ===
+    "SHY", "IEF", "TLT", "TIP", "GOVT",
+    
+    # === BONDS - Corporate (6) ===
+    "LQD", "HYG", "JNK", "VCIT", "VCSH", "BNDX",
+    
+    # === BONDS - Emerging & Aggregate (4) ===
+    "EMB", "EMLC", "AGG", "BND",
+    
+    # === REAL ESTATE (5) ===
+    "VNQ", "XLRE", "IYR", "REM", "VNQI",
+    
+    # === COMMODITIES - Precious Metals (4) ===
+    "GLD", "SLV", "PPLT", "PALL",
+    
+    # === COMMODITIES - Energy (3) ===
+    "USO", "UNG", "XLE",
+    
+    # === COMMODITIES - Agriculture (4) ===
+    "CORN", "WEAT", "SOYB", "DBA",
+    
+    # === COMMODITIES - Metals & General (3) ===
+    "CPER", "DBB", "DBC",
+    
+    # === FACTORS - Value (3) ===
+    "VTV", "IWD", "VBR",
+    
+    # === FACTORS - Growth (3) ===
+    "VUG", "IWF", "VBK",
+    
+    # === FACTORS - Momentum & Quality (4) ===
+    "MTUM", "PDP", "QUAL", "SPHQ",
+    
+    # === FACTORS - Low Vol (2) ===
+    "USMV", "SPLV",
+    
+    # === FAANG+ (7) ===
+    "AAPL", "MSFT", "GOOGL", "AMZN", "META", "NVDA", "TSLA",
+    
+    # === FINANCE (5) ===
+    "JPM", "BAC", "GS", "V", "MA",
+    
+    # === CONSUMER (5) ===
+    "KO", "PEP", "WMT", "COST", "MCD",
+    
+    # === HEALTHCARE (4) ===
+    "JNJ", "UNH", "PFE", "ABBV",
+    
+    # === INDUSTRIAL (4) ===
+    "BA", "CAT", "MMM", "GE"
+  ]
+  start_date: "2018-01-01"
+  end_date: "2024-12-31"
+  frequency: "1d"
+  include_cash: true
+  cash_symbol: "CASH"
+
+risk:
+  risk_free_rate: 0.015
+  min_weight: 0.0
+  max_weight: 0.15         # Reduzido de 0.4 para 0.15 (145 ativos = maior diversificação)
+  transaction_cost_bps: 5
+  slippage_bps: 2
+  deviation_penalty: 0.02
+  turnover_penalty: 0.10
+
+mpt:
+  profile: "moderado"           # conservador|moderado|agressivo
+  target_vol:
+    conservador: 0.06
+    moderado: 0.10
+    agressivo: 0.15
+  l2_reg: 0.001
+
+walk_forward:
+  train_start: "2018-01-01"
+  train_end:   "2022-12-31"
+  test_start:  "2023-01-01"
+  test_end:    "2024-12-31"
+
+env:
+  window_size: 60
+  include_weights: true
+  step_scale: 0.25
+  action_temperature: 1.0
+  reward:
+    vol_penalty: 0.0
+    dd_penalty: 0.0
+
+risk_overlay:
+  dd_trigger: -0.10   # ativa overlay (ex.: -10%)
+  dd_hard:    -0.25   # overlay máximo a -25%
+  max_cash:   0.60    # até 60% em CASH quando overlay máximo
+  smoothing:  0.90    # suavização exponencial no ajuste
+
+ppo:
+  total_timesteps: 100000    # Aumentado de 20k para 100k (mais ativos = mais treino necessário)
+  learning_rate: 0.0003
+  n_steps: 2048
+  batch_size: 256
+  gamma: 0.99
+  gae_lambda: 0.95
+  clip_range: 0.2
+  ent_coef: 0.0
+  vf_coef: 0.5
